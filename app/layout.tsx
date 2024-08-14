@@ -7,8 +7,8 @@ import { auth, ClerkProvider } from "@clerk/nextjs";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Marmum | Admin, 2024",
-  description: "Marmum Return To Adventure, Campaign, 2024",
+  title: "Al Ain BTS | Admin, 2024",
+  description: "Al Ain BTS Campaign, 2024",
 };
 
 export default function RootLayout({

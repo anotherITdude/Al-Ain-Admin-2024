@@ -8,10 +8,10 @@ import DataTable from "@/components/table";
 
 const Dashboard = async () => {
   // Fetch total entries count
-  const totalEntriesCount = await prismadb.backtoschoolMDF.count();
+  const totalEntriesCount = await prismadb.backtoschool.count();
 
   // Fetch latest 20 entries
-  const latestEntries = await prismadb.backtoschoolMDF.findMany({
+  const latestEntries = await prismadb.backtoschool.findMany({
     orderBy: [
       {
         createdAt: "desc",
@@ -34,7 +34,7 @@ const Dashboard = async () => {
   }));
 
   // Format the total entries (for the cards)
-  const totalEntries = await prismadb.backtoschoolMDF.findMany({
+  const totalEntries = await prismadb.backtoschool.findMany({
     orderBy: [
       {
         createdAt: "desc",
