@@ -1,17 +1,24 @@
-'use client'
+"use client";
 import React from "react";
 import { columns, EntryColumn } from "./columns";
 import { DataTable } from "./ui/datatable";
 import { Button } from "@/components/ui/button";
-import saveAs  from "file-saver";
+import saveAs from "file-saver";
 import ExcelJS from "exceljs";
-import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
+import {
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
 
 interface TableProps {
   data: EntryColumn[];
+  allData: EntryColumn[];
 }
 
-const Table: React.FC<TableProps> = ({ data }) => {
+const Table: React.FC<TableProps> = ({ data, allData }) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const table = useReactTable({
     data,
@@ -30,7 +37,7 @@ const Table: React.FC<TableProps> = ({ data }) => {
     const worksheet = workbook.addWorksheet("BTS");
 
     // Define your data and header row
-    const excelData = data.map((item) => [
+    const excelData = allData.map((item) => [
       item.name,
       item.mobile,
       item.email,
@@ -38,17 +45,17 @@ const Table: React.FC<TableProps> = ({ data }) => {
       item.eid,
       item.createdAt,
       item.lan,
-      item.reciept
-    
+      item.reciept,
     ]);
-    const headerRow = ["Name",
+    const headerRow = [
+      "Name",
       "Mobile",
       "Email",
       "Emirate",
       "EId",
       "Entry Date",
       "Language",
-      "Image"
+      "Image",
     ];
 
     // Add the header row to the worksheet
@@ -60,7 +67,7 @@ const Table: React.FC<TableProps> = ({ data }) => {
     // Generate a buffer with the Excel file
     workbook.xlsx.writeBuffer().then((buffer) => {
       // Save the buffer as a file using file-saver
-      saveAs(new Blob([buffer]), `Marmum_BTS_export.xlsx`);
+      saveAs(new Blob([buffer]), `AAF_BTS_export.xlsx`);
     });
   };
 
@@ -68,12 +75,11 @@ const Table: React.FC<TableProps> = ({ data }) => {
     <div>
       <div className="flex justify-end  mb-4">
         <Button variant="default" size="sm" onClick={exportToExcel}>
-          Export to Excel
+          {`Export to Excel (${allData?.length || 0} entries)`}
         </Button>
       </div>
       <DataTable columns={columns} data={data} />
-      <div className="flex items-center justify-end space-x-2 py-4">
-        {/* Add the Export to Excel button */}
+      {/* <div className="flex items-center justify-end space-x-2 py-4">
 
         <Button
           variant="outline"
@@ -91,7 +97,7 @@ const Table: React.FC<TableProps> = ({ data }) => {
         >
           Next
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
